@@ -42,14 +42,17 @@ class _RecentsScreenState extends State<RecentsScreen>
   }
 
   Future<void> _refresh() async {
-    if (mounted) setState(() => _loading = true);
+    if (mounted) {
+      setState(() => _loading = true);
+    }
     final allowed = await _logs.ensurePermission();
     if (!allowed) {
-      if (mounted)
+      if (mounted) {
         setState(() {
           _loading = false;
           _permissionDenied = true;
         });
+      }
       return;
     }
     try {
@@ -70,11 +73,12 @@ class _RecentsScreenState extends State<RecentsScreen>
         },
       );
     } catch (_) {
-      if (mounted)
+      if (mounted) {
         setState(() {
           _loading = false;
           _syncMessage = 'Sync will retry later';
         });
+      }
     }
   }
 
@@ -123,7 +127,7 @@ class _RecentsScreenState extends State<RecentsScreen>
               child: Center(child: CircularProgressIndicator()),
             )
           else if (_permissionDenied)
-            SliverFillRemaining(
+            const SliverFillRemaining(
               hasScrollBody: false,
               child: _MessageState(
                 icon: Icons.shield_outlined,
@@ -132,7 +136,7 @@ class _RecentsScreenState extends State<RecentsScreen>
                     'TelePro uses it to show recent calls and send authorized records to your dashboard.',
                 action: FilledButton(
                   onPressed: openAppSettings,
-                  child: const Text('Open settings'),
+                  child: Text('Open settings'),
                 ),
               ),
             )
@@ -229,8 +233,9 @@ class _CallTile extends StatelessWidget {
         '${value.hour.toString().padLeft(2, '0')}:${value.minute.toString().padLeft(2, '0')}';
     if (now.year == value.year &&
         now.month == value.month &&
-        now.day == value.day)
+        now.day == value.day) {
       return 'Today, $time';
+    }
     return '${value.day}/${value.month}/${value.year}, $time';
   }
 
@@ -252,23 +257,23 @@ class _MessageState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Center(
-    child: Padding(
-      padding: const EdgeInsets.all(32),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, size: 58, color: AppColors.primary),
-          const SizedBox(height: 16),
-          Text(
-            title,
-            style: Theme.of(context).textTheme.titleLarge,
-            textAlign: TextAlign.center,
+        child: Padding(
+          padding: const EdgeInsets.all(32),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(icon, size: 58, color: AppColors.primary),
+              const SizedBox(height: 16),
+              Text(
+                title,
+                style: Theme.of(context).textTheme.titleLarge,
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 8),
+              Text(message, textAlign: TextAlign.center),
+              if (action != null) ...[const SizedBox(height: 20), action!],
+            ],
           ),
-          const SizedBox(height: 8),
-          Text(message, textAlign: TextAlign.center),
-          if (action != null) ...[const SizedBox(height: 20), action!],
-        ],
-      ),
-    ),
-  );
+        ),
+      );
 }

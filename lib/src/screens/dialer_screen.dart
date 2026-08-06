@@ -69,9 +69,8 @@ class _DialerScreenState extends State<DialerScreen> {
                       style: TextStyle(
                         fontSize: _number.isEmpty ? 22 : 34,
                         fontWeight: FontWeight.w700,
-                        color: _number.isEmpty
-                            ? AppColors.muted
-                            : AppColors.ink,
+                        color:
+                            _number.isEmpty ? AppColors.muted : AppColors.ink,
                       ),
                     ),
                   ),
@@ -129,16 +128,18 @@ class _DialerScreenState extends State<DialerScreen> {
 
   void _append(String value) => setState(() => _number += value);
   void _backspace() {
-    if (_number.isNotEmpty)
+    if (_number.isNotEmpty) {
       setState(() => _number = _number.substring(0, _number.length - 1));
+    }
   }
 
   void _clear() => setState(() => _number = '');
 
   Future<void> _call() async {
     final uri = Uri(scheme: 'tel', path: _number);
-    if (await canLaunchUrl(uri))
+    if (await canLaunchUrl(uri)) {
       await launchUrl(uri, mode: LaunchMode.externalApplication);
+    }
   }
 }
 

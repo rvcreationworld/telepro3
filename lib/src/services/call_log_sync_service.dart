@@ -46,17 +46,17 @@ class CallLogSyncService {
   }
 
   Map<String, Object?> _toJson(CallLogEntry entry) => {
-    'id': _fingerprint(entry),
-    'number': entry.number,
-    'normalizedNumber': normalizeNumber(entry.number ?? ''),
-    'name': entry.name,
-    'direction': entry.callType?.name,
-    'startedAt': DateTime.fromMillisecondsSinceEpoch(
-      entry.timestamp ?? 0,
-      isUtc: true,
-    ).toIso8601String(),
-    'durationSeconds': entry.duration ?? 0,
-  };
+        'id': _fingerprint(entry),
+        'number': entry.number,
+        'normalizedNumber': normalizeNumber(entry.number ?? ''),
+        'name': entry.name,
+        'direction': entry.callType?.name,
+        'startedAt': DateTime.fromMillisecondsSinceEpoch(
+          entry.timestamp ?? 0,
+          isUtc: true,
+        ).toIso8601String(),
+        'durationSeconds': entry.duration ?? 0,
+      };
 
   String _fingerprint(CallLogEntry entry) =>
       '${normalizeNumber(entry.number ?? '')}|${entry.callType?.name}|${entry.timestamp}|${entry.duration}';
