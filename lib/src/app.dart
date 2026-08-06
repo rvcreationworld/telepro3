@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'screens/login_screen.dart';
+import 'screens/home_screen.dart';
 import 'theme/app_theme.dart';
 
 class TeleProApp extends StatelessWidget {
@@ -12,7 +12,7 @@ class TeleProApp extends StatelessWidget {
       title: 'TelePro',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light,
-      home: const LoginScreen(),
+      home: const HomeScreen(),
     );
   }
 }
