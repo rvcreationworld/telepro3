@@ -1,8 +1,8 @@
 # TelePro 3
 
-Android-only Flutter client with a smooth animated login, system call history,
-an in-app keypad that opens the original phone app, and incremental dashboard
-synchronization.
+Android-only Flutter module with a smooth system call-history screen, an in-app
+keypad that opens the original phone app, and incremental dashboard
+synchronization. Authentication is intentionally not included.
 
 ## Run
 
@@ -12,10 +12,15 @@ flutter run \
   --dart-define=CALL_LOG_SYNC_URL=https://api.example.com/v1/call-logs/sync
 ```
 
-The existing authentication flow should call:
+After your existing login succeeds, store its token and navigate to the module:
 
 ```dart
 await SessionStore.saveAuthToken(tokenFromYourLoginApi);
+if (context.mounted) {
+  Navigator.of(context).pushReplacement(
+    MaterialPageRoute(builder: (_) => const HomeScreen()),
+  );
+}
 ```
 
 The sync endpoint receives a batch under `logs`. Each log contains `id`,
